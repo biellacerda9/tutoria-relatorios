@@ -87,7 +87,7 @@ export function UploadZone({ onFileSelected, disabled, label, compact }: UploadZ
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            !disabled && inputRef.current?.click();
+            if (!disabled) inputRef.current?.click();
           }}
           className="rounded-lg border border-line bg-paper px-4 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-accent-soft"
         >

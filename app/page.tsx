@@ -21,7 +21,7 @@ type Status =
   | { kind: "error"; message: string }
   | { kind: "ready"; rows: EnrichedRow[]; fileName: string };
 
-const TAB_IDS = ["geral", "alunos", "validacao"] as const;
+type TabId = "geral" | "alunos" | "validacao";
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -29,7 +29,7 @@ function wait(ms: number) {
 
 export default function Home() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
-  const [tab, setTab] = useState<(typeof TAB_IDS)[number]>("geral");
+  const [tab, setTab] = useState<TabId>("geral");
 
   const handleFile = useCallback(async (file: File) => {
     setStatus({ kind: "parsing" });
@@ -147,7 +147,7 @@ export default function Home() {
               />
             </div>
 
-            <Tabs tabs={tabs} active={tab} onChange={(id) => setTab(id as (typeof TAB_IDS)[number])} />
+            <Tabs tabs={tabs} active={tab} onChange={(id) => setTab(id as TabId)} />
 
             {tab === "geral" && <Dashboard data={data} reportElementId="report-root" />}
             {tab === "alunos" && <StudentsTable rows={data.rows} />}
